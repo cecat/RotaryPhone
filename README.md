@@ -6,8 +6,8 @@ A Particle project named Dialer
 
 #### ```/src``` 
 
-#just getting started#
+...just getting started...
 
 #### Hardware and Wiring
 
-#placeholder#
+...placeholder...
