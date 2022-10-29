@@ -1,1 +1,5 @@
-{}
+{
+    "particle.targetDevice": "1a0035000b47393334363636",
+    "particle.firmwareVersion": "3.3.0",
+    "particle.targetPlatform": "photon"
+}

@@ -67,6 +67,11 @@ void loop() {
             dialedNumber += phoneNumber[d];
           }
           tellHASS(TOPIC_NUMBER, dialedNumber);
+          // blink the LEDs
+          for (int p=0; p<phoneNumberDigits; p++){
+            blinkLed(phoneNumber[p], 250, 500);
+            delay(700);
+          }
           //Particle.publish("Number is", dialedNumber);
           //Particle.publish("Number digits is,", String(phoneNumberDigits));
           dialing=FALSE;
