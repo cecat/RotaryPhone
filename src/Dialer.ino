@@ -14,6 +14,8 @@ bool dialing = FALSE; // end of sequence dialed
 int count;                    // pulse count for one digital dialed on rotor
 int in = D2;                  // rotor connected to pin D2
 int out = D0;                 // LED connected to D0;
+int switchHook = D4;          // switchhook on D4
+bool onHook = TRUE;
 int lastState = HIGH;
 int trueState = HIGH;
 double lastStateChangeTime = 0;
@@ -57,7 +59,11 @@ void setup()  {
 
 void loop() {
   delay(25);
-  reading = digitalRead(in);
+
+  if (onHook) {
+    onHook = digitalRead(switchHook);  // if receiver is lifted, we can listen for dialing
+  } else {
+    reading = digitalRead(in);
 
 // finished dialing sequence
       if ((millis() - lastStateChangeTime) > userHasFinishedDialingAfterMs) {  // finished dialing 
@@ -76,10 +82,11 @@ void loop() {
           //Particle.publish("Number digits is,", String(phoneNumberDigits));
           dialing=FALSE;
           phoneNumberDigits = 0;
+          onHook = TRUE;
         }
       } 
 
-  if ((millis() - lastStateChangeTime) > dialHasFinishedRotatingAfterMs) { // no action or end of digit rotation
+    if ((millis() - lastStateChangeTime) > dialHasFinishedRotatingAfterMs) { // no action or end of digit rotation
 
 
     if (digitComplete) {
@@ -96,17 +103,18 @@ void loop() {
     }
   }
 
-  if (reading != lastState) {
-      lastStateChangeTime = millis();
-      dialing=TRUE;
-    if (reading != trueState) {     //  switch has either just gone from closed->open or vice versa.
-      trueState = reading;
-      if (trueState == HIGH) {        // increment the pulse count if it's gone high.
+    if (reading != lastState) {
+        lastStateChangeTime = millis();
+        dialing=TRUE;
+      if (reading != trueState) {     //  switch has either just gone from closed->open or vice versa.
+        trueState = reading;
+        if (trueState == HIGH) {        // increment the pulse count if it's gone high.
           count++;
           digitComplete = TRUE;              // we'll need to print this number (once the dial has finished rotating)
-      } 
+        } 
+      }
+      lastState = reading;
     }
-    lastState = reading;
   }
 }
 
