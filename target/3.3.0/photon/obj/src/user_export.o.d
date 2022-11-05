@@ -1,4 +1,4 @@
-/Users/catlett/Dropbox/CODE/RotaryDial/Dialer/target/3.3.0/photon//obj/src/user_export.o: \
+/Users/catlett/Dropbox/CODE/RotaryPhone/target/3.3.0/photon//obj/src/user_export.o: \
  src/user_export.c \
  ../../../modules/shared/stm32f2xx/inc/user_part_export.c \
  ../../../modules/shared/stm32f2xx/inc/module_user_init.h \

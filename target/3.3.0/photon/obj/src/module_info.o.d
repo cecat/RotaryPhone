@@ -1,4 +1,4 @@
-/Users/catlett/Dropbox/CODE/RotaryDial/Dialer/target/3.3.0/photon//obj/src/module_info.o: \
+/Users/catlett/Dropbox/CODE/RotaryPhone/target/3.3.0/photon//obj/src/module_info.o: \
  src/module_info.c ../../../dynalib/inc/module_info.inc \
  ../../../dynalib/inc/module_info.h ../../../services/inc/static_assert.h \
  /Users/catlett/.particle/toolchains/gcc-arm/10.2.1/arm-none-eabi/include/assert.h \

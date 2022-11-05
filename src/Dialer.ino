@@ -60,9 +60,9 @@ void setup()  {
 void loop() {
   delay(25);
 
-  if (onHook) {
-    onHook = digitalRead(switchHook);  // if receiver is lifted, we can listen for dialing
-  } else {
+ // if (onHook) {
+ //   onHook = digitalRead(switchHook);  // if receiver is lifted, we can listen for dialing
+ // } else {
     reading = digitalRead(in);
 
 // finished dialing sequence
@@ -74,10 +74,10 @@ void loop() {
           }
           tellHASS(TOPIC_NUMBER, dialedNumber);
           // blink the LEDs
-          for (int p=0; p<phoneNumberDigits; p++){
+          /* for (int p=0; p<phoneNumberDigits; p++){
             blinkLed(phoneNumber[p], 250, 500);
             delay(700);
-          }
+          }*/
           //Particle.publish("Number is", dialedNumber);
           //Particle.publish("Number digits is,", String(phoneNumberDigits));
           dialing=FALSE;
@@ -94,7 +94,6 @@ void loop() {
           // line and reset the count. We mod the count by 10 because '0' will send 10 pulses.
 
       Particle.publish("Dialed ", String(count%10));
-      //blinkLed(count, 200, 400);
       phoneNumber[phoneNumberDigits] = count;
       phoneNumberDigits++;
       digitComplete = FALSE;
@@ -115,7 +114,7 @@ void loop() {
       }
       lastState = reading;
     }
-  }
+//  }
 }
 
 // led blinky

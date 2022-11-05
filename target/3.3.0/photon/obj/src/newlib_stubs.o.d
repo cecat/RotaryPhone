@@ -1,4 +1,4 @@
-/Users/catlett/Dropbox/CODE/RotaryDial/Dialer/target/3.3.0/photon//obj/src/newlib_stubs.o: \
+/Users/catlett/Dropbox/CODE/RotaryPhone/target/3.3.0/photon//obj/src/newlib_stubs.o: \
  src/newlib_stubs.cpp \
  /Users/catlett/.particle/toolchains/gcc-arm/10.2.1/arm-none-eabi/include/sys/types.h \
  /Users/catlett/.particle/toolchains/gcc-arm/10.2.1/arm-none-eabi/include/_ansi.h \
