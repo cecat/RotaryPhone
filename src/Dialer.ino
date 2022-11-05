@@ -60,56 +60,41 @@ void setup()  {
 void loop() {
   delay(25);
 
- // if (onHook) {
- //   onHook = digitalRead(switchHook);  // if receiver is lifted, we can listen for dialing
- // } else {
     reading = digitalRead(in);
 
 // finished dialing sequence
-      if ((millis() - lastStateChangeTime) > userHasFinishedDialingAfterMs) {  // finished dialing 
+    if ((millis() - lastStateChangeTime) > userHasFinishedDialingAfterMs) {  // finished dialing 
         if (dialing) {
           dialedNumber = "";
           for (int d=0; d<phoneNumberDigits; d++) {
             dialedNumber += phoneNumber[d];
           }
-          tellHASS(TOPIC_NUMBER, dialedNumber);
-          // blink the LEDs
-          /* for (int p=0; p<phoneNumberDigits; p++){
-            blinkLed(phoneNumber[p], 250, 500);
-            delay(700);
-          }*/
-          //Particle.publish("Number is", dialedNumber);
-          //Particle.publish("Number digits is,", String(phoneNumberDigits));
+          if (phoneNumberDigits) tellHASS(TOPIC_NUMBER, dialedNumber);
           dialing=FALSE;
           phoneNumberDigits = 0;
-          onHook = TRUE;
         }
-      } 
+    } 
+    // nothing happening or rotary finished this digit
+    if ((millis() - lastStateChangeTime) > dialHasFinishedRotatingAfterMs) {
 
-    if ((millis() - lastStateChangeTime) > dialHasFinishedRotatingAfterMs) { // no action or end of digit rotation
-
-
-    if (digitComplete) {
-          // if it's only just finished being dialed, we need to send the number down the serial
-          // line and reset the count. We mod the count by 10 because '0' will send 10 pulses.
-
-      Particle.publish("Dialed ", String(count%10));
-      phoneNumber[phoneNumberDigits] = count;
-      phoneNumberDigits++;
-      digitComplete = FALSE;
-      count = 0;
-      cleared = 0;
+      if (digitComplete) {    // if it's only just finished being dialed, save the digit and reset the count.
+          Particle.publish("Dialed a ", String(count%10));
+          phoneNumber[phoneNumberDigits] = count;
+          phoneNumberDigits++;
+          digitComplete = FALSE;
+          count = 0;
+          cleared = 0;
+      }
     }
-  }
 
     if (reading != lastState) {
         lastStateChangeTime = millis();
         dialing=TRUE;
       if (reading != trueState) {     //  switch has either just gone from closed->open or vice versa.
         trueState = reading;
-        if (trueState == HIGH) {        // increment the pulse count if it's gone high.
+        if (trueState == HIGH) {      // increment the pulse count if it's gone high.
           count++;
-          digitComplete = TRUE;              // we'll need to print this number (once the dial has finished rotating)
+          digitComplete = TRUE;       // we'll need to print this number (once the dial has finished rotating)
         } 
       }
       lastState = reading;
